@@ -6,12 +6,10 @@ canvas {
     float:left;
     width:150px;
     }
-#controls li {
+#controls .control {
     cursor: pointer;
-    padding-bottom:15px;
     font-weight: bold;
-    list-style-type: none;
     }
-#markup {
-    display:none;
-    }
+#highlight-seed, #stop-automaton {
+    display: none;
+}
