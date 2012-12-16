@@ -14,11 +14,11 @@ $(document).ready(function(){
         '111' : '0',
     }
 
-    var canvas = document.getElementById('canvas')
+    var canvas = document.getElementById('1d-automaton')
     var c = canvas.getContext('2d');
 
-    var cellWidth = Math.floor(canvas.width / cells);
-    var cellHeight = Math.floor(canvas.height / generations);
+    var cellWidth = canvas.width / cells;
+    var cellHeight = canvas.height / generations;
     var generation = 0;
 
     function cell(x, y, h, l) {

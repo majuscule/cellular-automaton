@@ -8,10 +8,10 @@ canvas {
     }
 #controls .control, #controls .label {
     font-weight: bold;
-}
+    }
 #controls .control {
     cursor: pointer;
-}
+    }
 #highlight-seed, #stop-automaton {
     display: none;
-}
+    }

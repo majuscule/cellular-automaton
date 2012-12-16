@@ -1,6 +1,6 @@
 $(document).ready(function(){
     
-    var canvas = document.getElementById('canvas')
+    var canvas = document.getElementById('2d-automaton')
     var c = canvas.getContext('2d');
 
     var rows = 50;
