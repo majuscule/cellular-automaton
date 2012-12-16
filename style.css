@@ -2,9 +2,8 @@ canvas {
     position: absolute;
     top: 1px;
     left: 1px;
-    border:1px solid black;
     margin: 20px;
-    width: 750px;
+    border: 1px solid black;
     }
 #controls {
     float:right;

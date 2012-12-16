@@ -3,15 +3,16 @@
     <title>cellular automaton</title>
     <link type='text/css' rel='stylesheet' href='style.css'>
     <script type='text/javascript' src='jquery-core.js'></script>
-    <script type='text/javascript' src='1d.js'></script>
+    <script type='text/javascript' src='2d.js'></script>
   </head>
   <body>
     <div id='container'>
-      <canvas id='canvas'></canvas>
+      <canvas width='750px' height='750px' id='canvas'></canvas>
     </div>
-    <ul id='controls'>
-	  <li id='draw' class='tool'>1D</li>
-    </ul>
+    <div id='controls'>
+    <h1>2D</h1>
+    Generation: <span id='generation'>0</span>
+    </div>
     <div id='markup'>test</div>
   </body>
 </html>
