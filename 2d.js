@@ -44,7 +44,7 @@ $(document).ready(function(){
         var x = 0;
         var y = 0;
         for (var i = 0; i < cells; i++) {
-            world.push(new cell(x, y, cellHeight, cellWidth));
+            world.push(new cell(x, y, cellWidth, cellHeight));
             x += cellWidth;
             Math.random() > .5 ? world[i].revive() : world[i].kill();
         }
@@ -58,7 +58,7 @@ $(document).ready(function(){
         var s = '0' + world.map(function(c) { return c.state }).join('') + '0';
         world = [];
         for (var i = 0; i < cells; i++) {
-            world.push(new cell(x, y, cellHeight, cellWidth));
+            world.push(new cell(x, y, cellWidth, cellHeight));
             x += cellWidth;
             state[s.substr(i, 3)] == 1 ? world[i].revive() : world[i].kill();
         }
