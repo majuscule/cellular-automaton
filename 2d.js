@@ -25,14 +25,6 @@ $(document).ready(function(){
             c.fillRect(this.x, this.y, this.h, this.l);
             this.state = 1;
         }
-        this.redraw = function() {
-            c.fillStyle = this.state == 1 ? "rgb(0,0,0)" : "rgb(255,255,255)";
-            c.fillRect(this.x, this.y, this.h, this.l);
-        }
-        this.highlight = function() {
-            c.fillStyle = "rgb(0,0,100)";
-            c.fillRect(this.x, this.y, this.h, this.l);
-        }
     }
 
     function universe() {
@@ -49,15 +41,6 @@ $(document).ready(function(){
                 Math.random() > .5 ? world[ii].revive() : world[ii].kill();
             }
             this.population.push(world);
-        }
-
-        this.print = function() {
-            for (var i = 0; i < rows; i++) {
-                var s = '';
-                for (var ii = 0; ii < columns; ii++) {
-                    s += this.population[i][ii];
-                }
-            }
         }
 
         this.highlight = function() {
@@ -121,33 +104,18 @@ $(document).ready(function(){
     }
 
     var automaton = new universe;
-    var seed = $.extend(true, {}, automaton);
     var tickID = 0;
 
     $('#controls #start-automaton').click(function(e){
         tickID = setInterval(function(){tick(automaton)}, 100);
         $('#controls #start-automaton').hide();
         $('#controls #stop-automaton').show();
-        $('#controls #highlight-seed').show();
     });
 
     $('#controls #stop-automaton').click(function(e){
         clearInterval(tickID);
         $('#controls #stop-automaton').hide();
         $('#controls #start-automaton').show();
-    });
-
-    $('#controls #reset-automaton').click(function(e){
-        clearInterval(tickID);
-        $('#controls #stop-automaton').hide();
-        $('#controls #start-automaton').show();
-        automaton = $.extend(true, {}, seed);
-        $('#generation')[0].innerHTML = automaton.generation;
-        automaton.redraw();
-    });
-
-    $('#controls #highlight-seed').click(function(e){
-        seed.highlight();
     });
 
 });

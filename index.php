@@ -16,8 +16,6 @@
         <br><br>
         <span id='start-automaton' class='control'>Start automaton</span>
         <span id='stop-automaton' class='control'>Stop automaton</span>
-        <span id='reset-automaton' class='control'>Reset automaton</span>
-        <span id='highlight-seed' class='control'>Highlight seed</span>
       </div>
     </div>
     <div id='1d-container'>
