@@ -1,7 +1,7 @@
 $(document).ready(function(){
     
     var canvas = document.getElementById('canvas')
-    var c = canvas.getContext('2d');
+    c = canvas.getContext('2d');
 
     var rows = 50;
     var columns = 50;
@@ -14,23 +14,41 @@ $(document).ready(function(){
         this.y = y;
         this.h = h;
         this.l = l;
+
+        this.radius = this.l / 2;
+        this.x += this.l / 2;
+        this.y += this.h / 2;
+//        c.beginPath();
+//        c.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
+//        c.fill();
+
         this.state = 0;
+
         this.kill = function() {
             c.fillStyle = "rgb(255,255,255)";
-            c.fillRect(this.x, this.y, this.h, this.l);
+            //c.fillRect(this.x, this.y, this.h, this.l);
+            c.beginPath();
+            c.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
+            c.fill();
             this.state = 0;
         }
+
         this.revive = function() {
             c.fillStyle = "rgb(0,0,0)";
-            c.fillRect(this.x, this.y, this.h, this.l);
+            //c.fillRect(this.x, this.y, this.h, this.l);
+            c.beginPath();
+            c.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
+            c.fill();
             this.state = 1;
         }
-        this.redraw = function() {
-            c.fillStyle = this.state == 1 ? "rgb(0,0,0)" : "rgb(255,255,255)";
-            c.fillRect(this.x, this.y, this.h, this.l);
-        }
+
+//        this.redraw = function() {
+//            c.fillStyle = this.state == 1 ? "rgb(0,0,0)" : "rgb(255,255,255)";
+//            c.fillRect(this.x, this.y, this.h, this.l);
+//        }
+//
         this.highlight = function() {
-            c.fillStyle = "rgb(0,0,100)";
+            c.fillStyle = "rgba(0,0,100,.5)";
             c.fillRect(this.x, this.y, this.h, this.l);
         }
     }
@@ -47,6 +65,7 @@ $(document).ready(function(){
                 world.push(new cell(x, y, cellWidth, cellHeight));
                 x += cellWidth;
                 Math.random() > .5 ? world[ii].revive() : world[ii].kill();
+                //world[ii].state ? world[ii].highlight() : '';
             }
             this.population.push(world);
         }
@@ -55,8 +74,9 @@ $(document).ready(function(){
             for (var i = 0; i < rows; i++) {
                 var s = '';
                 for (var ii = 0; ii < columns; ii++) {
-                    s += this.population[i][ii];
+                    s += this.population[i][ii].state;
                 }
+                console.log(s);
             }
         }
 
@@ -120,15 +140,14 @@ $(document).ready(function(){
         $('#generation')[0].innerHTML = automaton.generation;
     }
 
-    var automaton = new universe;
-    var seed = $.extend(true, {}, automaton);
+    var automaton = new universe();
     var tickID = 0;
 
     $('#controls #start-automaton').click(function(e){
         tickID = setInterval(function(){tick(automaton)}, 100);
         $('#controls #start-automaton').hide();
         $('#controls #stop-automaton').show();
-        $('#controls #highlight-seed').show();
+//        $('#controls #highlight-seed').show();
     });
 
     $('#controls #stop-automaton').click(function(e){
@@ -137,17 +156,18 @@ $(document).ready(function(){
         $('#controls #start-automaton').show();
     });
 
-    $('#controls #reset-automaton').click(function(e){
-        clearInterval(tickID);
-        $('#controls #stop-automaton').hide();
-        $('#controls #start-automaton').show();
-        automaton = $.extend(true, {}, seed);
-        $('#generation')[0].innerHTML = automaton.generation;
-        automaton.redraw();
-    });
+//    $('#controls #reset-automaton').click(function(e){
+//        clearInterval(tickID);
+//        $('#controls #stop-automaton').hide();
+//        $('#controls #start-automaton').show();
+//        automaton.generation = 0;
+//        automaton.population = JSON.parse(seed);
+//        $('#generation')[0].innerHTML = automaton.generation;
+//        automaton.redraw();
+//    });
 
-    $('#controls #highlight-seed').click(function(e){
-        seed.highlight();
-    });
+//    $('#controls #highlight-seed').click(function(e){
+//        seed.highlight();
+//    });
 
 });
