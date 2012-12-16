@@ -1,7 +1,7 @@
 $(document).ready(function(){
     
-    var cells = 20;
-    var generations = 10;
+    var cells = 100;
+    var generations = 100;
 
     var state = {
         '000' : '0',
