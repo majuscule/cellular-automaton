@@ -11,7 +11,8 @@
       <canvas width='750px' height='750px' id='2d-automaton'></canvas>
       <div id='controls'>
         <h1>2D</h1>
-        <span class='label'>Generation: <span id='generation'>0</span></span>
+        <span class='label'>Generation <span id='generation'>0</span></span>
+        <br>
         <span class='label'>2500 cells</span>
         <br><br>
         <span id='start-automaton' class='control'>Start automaton</span>
