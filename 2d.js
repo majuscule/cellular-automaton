@@ -124,6 +124,14 @@ $(document).ready(function(){
         running = 0;
     });
 
+    $('#controls #reseed-automaton').click(function(e){
+        if (running) clearInterval(tickID);
+        $('#controls #stop-automaton').hide();
+        $('#controls #start-automaton').show();
+        running = 0;
+        automaton = new universe;
+    });
+
     $('#2d-automaton').click(function(e) {
         if (!running) {
             var x = e.pageX - $('#2d-automaton').offset().left;
