@@ -16,10 +16,9 @@
         <span class='label'>2500 cells</span>
         <br><br>
         <span id='start-automaton' class='control'>Start automaton</span>
-        <span id='stop-automaton' class='control'>Stop automaton</span><br>
-        <span class='label'>
-          Reseed <span id='reseed-automaton' class='control'>random</span>
-          or <span id='custom-seed-automaton' class='control'>blank</span>
+        <span id='stop-automaton' class='control'>Stop automaton</span><br><br>
+          <span id='reseed-automaton' class='control'>Reseed random</span><br>
+          <span id='custom-seed-automaton' class='control'>Reseed blank</span>
         </span>
       </div>
     </div>
