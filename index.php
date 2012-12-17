@@ -15,7 +15,7 @@
         <br>
         <span class='label'>2500 cells</span>
         <br><br>
-        <span id='start-automaton' class='control'>Start automaton</span><br>
+        <span id='start-automaton' class='control'>Start automaton</span>
         <span id='stop-automaton' class='control'>Stop automaton</span><br>
         <span class='label'>
           Reseed <span id='reseed-automaton' class='control'>random</span>
