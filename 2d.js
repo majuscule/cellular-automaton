@@ -69,7 +69,7 @@ $(document).ready(function(){
         }
     }
 
-    function tick(automaton, blank) {
+    function tick(automaton) {
         automaton.generation += 1;
         var universe = automaton.population;
         var newUniverse = [];
