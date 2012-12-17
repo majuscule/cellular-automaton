@@ -1,6 +1,6 @@
 $(document).ready(function(){
     
-    var canvas = document.getElementById('2d-automaton')
+    var canvas = $('#2d-automaton')[0];
     var c = canvas.getContext('2d');
 
     var rows = 50;
@@ -24,6 +24,9 @@ $(document).ready(function(){
             c.fillStyle = "rgb(0,0,0)";
             c.fillRect(this.x, this.y, this.h, this.l);
             this.state = 1;
+        }
+        this.toggle = function() {
+            this.state ? this.kill() : this.revive();
         }
     }
 
@@ -105,17 +108,30 @@ $(document).ready(function(){
 
     var automaton = new universe;
     var tickID = 0;
+    var running = 0;
 
     $('#controls #start-automaton').click(function(e){
         tickID = setInterval(function(){tick(automaton)}, 100);
         $('#controls #start-automaton').hide();
         $('#controls #stop-automaton').show();
+        running = 1;
     });
 
     $('#controls #stop-automaton').click(function(e){
-        clearInterval(tickID);
+        if (running) clearInterval(tickID);
         $('#controls #stop-automaton').hide();
         $('#controls #start-automaton').show();
+        running = 0;
+    });
+
+    $('#2d-automaton').click(function(e) {
+        if (!running) {
+            var x = e.pageX - $('#2d-automaton').offset().left;
+            var y = e.pageY - $('#2d-automaton').offset().top;
+            var row = Math.floor(y / cellHeight);
+            var column = Math.floor(x / cellWidth);
+            automaton.population[row][column].toggle();
+        }
     });
 
 });
