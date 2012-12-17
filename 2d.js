@@ -30,9 +30,10 @@ $(document).ready(function(){
         }
     }
 
-    function universe() {
+    function universe(blank) {
         this.population = [];
         this.generation = 0;
+        var blank = blank || 0;
 
         for (var i = 0; i < rows; i++) {
             var world = [];
@@ -41,7 +42,8 @@ $(document).ready(function(){
             for (var ii = 0; ii < columns; ii++) {
                 world.push(new cell(x, y, cellWidth, cellHeight));
                 x += cellWidth;
-                Math.random() > .5 ? world[ii].revive() : world[ii].kill();
+                if (blank) { world[ii].kill(); }
+                else { Math.random() > .5 ? world[ii].revive() : world[ii].kill(); }
             }
             this.population.push(world);
         }
@@ -67,7 +69,7 @@ $(document).ready(function(){
         }
     }
 
-    function tick(automaton) {
+    function tick(automaton, blank) {
         automaton.generation += 1;
         var universe = automaton.population;
         var newUniverse = [];
@@ -128,8 +130,16 @@ $(document).ready(function(){
         if (running) clearInterval(tickID);
         $('#controls #stop-automaton').hide();
         $('#controls #start-automaton').show();
+        automaton = new universe();
         running = 0;
-        automaton = new universe;
+    });
+
+    $('#controls #custom-seed-automaton').click(function(e){
+        if (running) clearInterval(tickID);
+        $('#controls #stop-automaton').hide();
+        $('#controls #start-automaton').show();
+        automaton = new universe(1);
+        running = 0;
     });
 
     $('#2d-automaton').click(function(e) {
