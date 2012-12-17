@@ -43,6 +43,8 @@ $(document).ready(function(){
         var world = [];
         var x = 0;
         var y = 0;
+        generation = 0;
+        generations = 100;
         for (var i = 0; i < cells; i++) {
             world.push(new cell(x, y, cellWidth, cellHeight));
             x += cellWidth;
@@ -66,7 +68,13 @@ $(document).ready(function(){
     }
 
     var world = populate_world();
-    while (generations) { generate(); generations-- }
+    while (generations - generation) { generate();}
     //var tick_id = setInterval(generate, 100);
+
+    $('#controls #regenerate-automaton').click(function(e){
+        c.clearRect(0,0,canvas.width,canvas.height);
+        world = populate_world();
+        while (generations - generation) { generate(); }
+    });
 
 });

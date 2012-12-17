@@ -26,6 +26,8 @@
         <br>
         <span class='label'>100 Generations</label><br>
         <span class='label'>100 Cells</label>
+        <br><br>
+        <span id='regenerate-automaton' class='control'>Regenerate automaton</span>
       </div>
     </div>
   </body>
