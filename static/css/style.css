@@ -1,0 +1,17 @@
+canvas {
+    margin: 20px;
+    float:left;
+    }
+#controls {
+    float:left;
+    width:150px;
+    }
+#controls .control, #controls .label {
+    font-weight: bold;
+    }
+#controls .control {
+    cursor: pointer;
+    }
+#highlight-seed, #stop-automaton {
+    display: none;
+    }
