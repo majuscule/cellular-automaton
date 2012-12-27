@@ -49,7 +49,7 @@ def make_permalink():
 
     r.set(token, seed_int)
 
-    return jsonify(url_for('index', token=token, _external=True))
+    return jsonify(permalink=url_for('index', token=token, _external=True))
 
 if __name__ == '__main__':
     app.run()
