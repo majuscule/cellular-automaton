@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+
     var canvas = $('#2d-automaton')[0];
     var c = canvas.getContext('2d');
 
@@ -40,7 +40,7 @@ $(document).ready(function(){
         this.tickID = 0;
 
         this.blank = blank || 0;
-        
+
         this.rows = 50;
         this.columns = 50;
 
@@ -199,7 +199,9 @@ $(document).ready(function(){
                 seed : automaton.serialize()
             },
             success : function(data){
-                document.write('<a href="' + data.permalink + '">' + data.permalink + '</a>');
+                $('#save-automaton-seed').attr('id', 'permalink');
+                $('#permalink').attr("href", data.permalink);
+                $('#permalink').html(data.permalink);
             },
             error : function(XMLHttpRequest, textStatus, errorThrown) {
             }
