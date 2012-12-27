@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, abort
 import redis
 
 app = Flask(__name__)
@@ -25,7 +25,7 @@ def index(token):
 
     seed_int = r.get(token)
     if not seed_int:
-        return render_template('index.html', seed=0)
+        return abort(404)
 
     seed = bin(seed_int)[2:]
     return render_template('index.html', seed=seed)
