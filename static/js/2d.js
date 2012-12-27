@@ -77,13 +77,11 @@ $(document).ready(function(){
         }
 
         this.serialize = function() {
-            var serial = [];
+            var serial = '';
             for (var i = 0; i < this.rows; i++) {
-                var row = [];
                 for (var ii = 0; ii < this.columns; ii++) {
-                    row[ii] = this.population[i][ii].state;
+                    serial += this.population[i][ii].state;
                 }
-                serial.push(row);
             }
             return serial;
         }
@@ -163,6 +161,22 @@ $(document).ready(function(){
         $('#controls #stop-automaton').hide();
         $('#controls #start-automaton').show();
         automaton = new universe(1);
+    });
+
+    $('#save-automaton-seed').click(function(e) {
+        console.log(POST_URL);
+        $.ajax({
+            type : 'POST',
+            url : POST_URL,
+            dataType : 'json',
+            data: {
+                seed : automaton.serialize()
+            },
+            success : function(data){
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
     });
 
     $('#2d-automaton').click(function(e) {
