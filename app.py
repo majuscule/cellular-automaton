@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, abort, request
 import redis
+import random
 
 app = Flask(__name__)
 app.debug = True
