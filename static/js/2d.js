@@ -3,6 +3,14 @@ $(document).ready(function(){
     var canvas = $('#2d-automaton')[0];
     var c = canvas.getContext('2d');
 
+    var mouseX = 0;
+    var mouseY = 0;
+    var mouseDown = 0;
+
+    $(document).mousemove(function(e) {
+        mouseX = e.pageX - $('#2d-automaton').offset().left;
+        mouseY = e.pageY - $('#2d-automaton').offset().top;
+    });
 
     function cell(x, y, h, l) {
         this.x = x;
@@ -53,7 +61,8 @@ $(document).ready(function(){
         }
 
         this.start = function() {
-            this.tickID = setInterval(function(){tick(automaton)}, 100);
+            _this = this;
+            this.tickID = setInterval(function(){_this.tick()}, 100);
             this.running = 1;
         }
 
@@ -95,45 +104,53 @@ $(document).ready(function(){
                 }
             }
         }
-    }
 
-    function tick(automaton) {
-        automaton.generation += 1;
-        var universe = automaton.population;
-        var newUniverse = [];
-        for (var i = 0; i < universe.length; i++) {
-            newUniverse[i] = [];
-            for (var ii = 0; ii < universe[i].length; ii++) {
-                var neighbors = (universe[i][ii+1] ? universe[i][ii+1].state : 0) +
-                                (universe[i][ii-1] ? universe[i][ii-1].state : 0) +
-                                (universe[i+1] ? 
-                                    (universe[i+1][ii] ? universe[i+1][ii].state : 0) +
-                                    (universe[i+1][ii+1] ? universe[i+1][ii+1].state : 0) +
-                                    (universe[i+1][ii-1] ? universe[i+1][ii-1].state : 0)
-                                    : 0) +
-                                (universe[i-1] ? 
-                                    (universe[i-1][ii] ? universe[i-1][ii].state : 0) +
-                                    (universe[i-1][ii-1] ? universe[i-1][ii-1].state : 0) +
-                                    (universe[i-1][ii+1] ? universe[i-1][ii+1].state : 0)
-                                    : 0);
-                universe[i][ii].neighbors = neighbors;
-                if (universe[i][ii].state == 1) {
-                    if (neighbors < 2 || neighbors > 3) {
-                        newUniverse[i][ii] = 0;
-                    } else { 
-                        newUniverse[i][ii] = 1;
+        this.tick = function() {
+            this.generation += 1;
+            var universe = this.population;
+            var newUniverse = [];
+            for (var i = 0; i < universe.length; i++) {
+                newUniverse[i] = [];
+                for (var ii = 0; ii < universe[i].length; ii++) {
+                    var neighbors = (universe[i][ii+1] ? universe[i][ii+1].state : 0) +
+                                    (universe[i][ii-1] ? universe[i][ii-1].state : 0) +
+                                    (universe[i+1] ? 
+                                        (universe[i+1][ii] ? universe[i+1][ii].state : 0) +
+                                        (universe[i+1][ii+1] ? universe[i+1][ii+1].state : 0) +
+                                        (universe[i+1][ii-1] ? universe[i+1][ii-1].state : 0)
+                                        : 0) +
+                                    (universe[i-1] ? 
+                                        (universe[i-1][ii] ? universe[i-1][ii].state : 0) +
+                                        (universe[i-1][ii-1] ? universe[i-1][ii-1].state : 0) +
+                                        (universe[i-1][ii+1] ? universe[i-1][ii+1].state : 0)
+                                        : 0);
+                    universe[i][ii].neighbors = neighbors;
+                    if (universe[i][ii].state == 1) {
+                        if (neighbors < 2 || neighbors > 3) {
+                            newUniverse[i][ii] = 0;
+                        } else { 
+                            newUniverse[i][ii] = 1;
+                        }
+                    } else {
+                        newUniverse[i][ii] = (neighbors == 3 ? 1 : 0);
                     }
-                } else {
-                    newUniverse[i][ii] = (neighbors == 3 ? 1 : 0);
                 }
             }
-        }
-        for (var i in newUniverse) {
-            for (var ii in newUniverse[i]) {
-                newUniverse[i][ii] ? universe[i][ii].revive() : universe[i][ii].kill();
+            for (var i in newUniverse) {
+                for (var ii in newUniverse[i]) {
+                    newUniverse[i][ii] ? universe[i][ii].revive() : universe[i][ii].kill();
+                }
             }
+            $('#generation')[0].innerHTML = this.generation;
+
         }
-        $('#generation')[0].innerHTML = automaton.generation;
+    }
+
+    var drawTick = function() {
+        if (mouseDown && !automaton.running) {
+            var row = Math.floor(mouseY / automaton.cellHeight);
+            var column = Math.floor(mouseX / automaton.cellWidth);
+        }
     }
 
     var automaton = new universe;
@@ -174,20 +191,24 @@ $(document).ready(function(){
                 seed : automaton.serialize()
             },
             success : function(data){
+                document.write('<a href="' + data.permalink + '">' + data.permalink + '</a>');
             },
             error : function(XMLHttpRequest, textStatus, errorThrown) {
             }
         });
     });
 
-    $('#2d-automaton').click(function(e) {
+    $('#2d-automaton').mousedown(function(e) {
+        mouseDown = 1;
         if (!automaton.running) {
-            var x = e.pageX - $('#2d-automaton').offset().left;
-            var y = e.pageY - $('#2d-automaton').offset().top;
-            var row = Math.floor(y / automaton.cellHeight);
-            var column = Math.floor(x / automaton.cellWidth);
+            var row = Math.floor(mouseY / automaton.cellHeight);
+            var column = Math.floor(mouseX / automaton.cellWidth);
             automaton.population[row][column].toggle();
         }
+    });
+
+    $('#2d-automaton').mouseup(function(e) {
+        mouseDown = 0;
     });
 
 });
