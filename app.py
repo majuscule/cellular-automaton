@@ -23,9 +23,12 @@ def index(token):
     if token == 0:
         return render_template('index.html', seed=0)
 
-    seed_int = int(r.get(token))
+
+    seed_int = r.get(token)
     if not seed_int:
         return abort(404)
+
+    seed_int = int(seed_int)
 
     seed = bin(seed_int)[2:]
     return render_template('index.html', seed=seed)
