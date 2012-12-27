@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, abort
+from flask import Flask, render_template, url_for, abort, request
 import redis
 
 app = Flask(__name__)
