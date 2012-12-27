@@ -89,8 +89,9 @@ $(document).ready(function(){
         this.populate = function(seed) {
             for (var i = 0; i < this.rows; i++) {
                 for (var ii = 0; ii < this.columns; ii++) {
-                    seed[i][ii] ? this.population[i][ii].revive()
-                                : this.population[i][ii].kill();
+                    seed.charAt(i*this.columns+ii) == 1
+                        ? this.population[i][ii].revive()
+                        : this.population[i][ii].kill();
                 }
             }
         }
