@@ -52,4 +52,4 @@ def make_permalink():
     return jsonify(permalink=url_for('index', token=token, _external=True))
 
 if __name__ == '__main__':
-    app.run()
+    app.run('0.0.0.0', port=5001)

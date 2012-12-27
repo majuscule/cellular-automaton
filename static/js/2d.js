@@ -146,10 +146,18 @@ $(document).ready(function(){
         }
     }
 
-    var drawTick = function() {
-        if (mouseDown && !automaton.running) {
+    var drawTick = function(currentHoveredCell) {
+        var lastHoveredCell = currentHoveredCell;
+        return function() {
             var row = Math.floor(mouseY / automaton.cellHeight);
             var column = Math.floor(mouseX / automaton.cellWidth);
+            var row = Math.floor(mouseY / automaton.cellHeight);
+            var column = Math.floor(mouseX / automaton.cellWidth);
+            currentHoveredCell = automaton.population[row][column];
+            if (currentHoveredCell.x != lastHoveredCell.x
+                    || currentHoveredCell.y != lastHoveredCell.y)
+                currentHoveredCell.toggle();
+            lastHoveredCell = currentHoveredCell;
         }
     }
 
@@ -198,17 +206,23 @@ $(document).ready(function(){
         });
     });
 
+    var drawTickID = 0;
+
     $('#2d-automaton').mousedown(function(e) {
-        mouseDown = 1;
         if (!automaton.running) {
+            mouseDown = 1;
             var row = Math.floor(mouseY / automaton.cellHeight);
             var column = Math.floor(mouseX / automaton.cellWidth);
-            automaton.population[row][column].toggle();
+            var currentHoveredCell = automaton.population[row][column];
+            currentHoveredCell.toggle();
+            var _drawTick = drawTick(currentHoveredCell);
+            drawTickID = setInterval(_drawTick, 30);
         }
     });
 
     $('#2d-automaton').mouseup(function(e) {
         mouseDown = 0;
+        clearInterval(drawTickID);
     });
 
 });
