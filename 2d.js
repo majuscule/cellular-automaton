@@ -3,11 +3,6 @@ $(document).ready(function(){
     var canvas = $('#2d-automaton')[0];
     var c = canvas.getContext('2d');
 
-    var rows = 50;
-    var columns = 50;
-
-    var cellWidth = canvas.width / rows;
-    var cellHeight = canvas.height / columns;
 
     function cell(x, y, h, l) {
         this.x = x;
@@ -33,39 +28,46 @@ $(document).ready(function(){
     function universe(blank) {
         this.population = [];
         this.generation = 0;
-        var blank = blank || 0;
 
-        for (var i = 0; i < rows; i++) {
+        this.blank = blank || 0;
+        
+        this.rows = 50;
+        this.columns = 50;
+
+        var cellWidth = canvas.width / this.rows;
+        var cellHeight = canvas.height / this.columns;
+
+        for (var i = 0; i < this.rows; i++) {
             var world = [];
             var x = 0;
             var y = i * cellHeight;
-            for (var ii = 0; ii < columns; ii++) {
+            for (var ii = 0; ii < this.columns; ii++) {
                 world.push(new cell(x, y, cellWidth, cellHeight));
                 x += cellWidth;
-                if (blank) { world[ii].kill(); }
+                if (this.blank) { world[ii].kill(); }
                 else { Math.random() > .5 ? world[ii].revive() : world[ii].kill(); }
             }
             this.population.push(world);
         }
 
-        this.highlight = function() {
-            for (var i = 0; i < rows; i++) {
-                for (var ii = 0; ii < columns; ii++) {
-                    if (this.population[i][ii].state == 1) {
-                        this.population[i][ii].highlight();
-                    }
-                }
-            }
-        }
-
         this.redraw = function() {
-            for (var i = 0; i < rows; i++) {
-                for (var ii = 0; ii < columns; ii++) {
+            for (var i = 0; i < this.rows; i++) {
+                for (var ii = 0; ii < this.columns; ii++) {
                     if (this.population[i][ii].state == 1) {
                         this.population[i][ii].redraw();
                     }
                 }
             }
+        }
+
+        this.serialize = function() {
+            var serial = '';
+            for (var i = 0; i < this.rows; i++) {
+                for (var ii = 0; ii < this.columns; ii++) {
+                    serial += this.population[i][ii].state;
+                }
+            }
+            return serialize;
         }
     }
 
