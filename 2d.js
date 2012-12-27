@@ -77,13 +77,24 @@ $(document).ready(function(){
         }
 
         this.serialize = function() {
-            var serial = '';
+            var serial = [];
             for (var i = 0; i < this.rows; i++) {
+                var row = [];
                 for (var ii = 0; ii < this.columns; ii++) {
-                    serial += this.population[i][ii].state;
+                    row[ii] = this.population[i][ii].state;
                 }
+                serial.push(row);
             }
             return serial;
+        }
+
+        this.populate = function(seed) {
+            for (var i = 0; i < this.rows; i++) {
+                for (var ii = 0; ii < this.columns; ii++) {
+                    seed[i][ii] ? this.population[i][ii].revive()
+                                : this.population[i][ii].kill();
+                }
+            }
         }
     }
 
