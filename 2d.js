@@ -63,6 +63,7 @@ $(document).ready(function(){
         }
 
         this.toggle = function() {
+            this.running ? this.stop() : this.start();
         }
 
         this.redraw = function() {
