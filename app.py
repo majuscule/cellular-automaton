@@ -35,6 +35,9 @@ def index(token):
 def make_permalink():
     seed = request.form['seed']
 
+    if not seed.isdigit():
+        return abort(404)
+
     seed_int = int(seed, 2)
 
     token = generate_token()
