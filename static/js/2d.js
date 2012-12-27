@@ -136,6 +136,7 @@ $(document).ready(function(){
     }
 
     var automaton = new universe;
+    if (SEED != 0) automaton.populate(SEED);
 
     $('#controls #start-automaton').click(function(e){
         automaton.start();
@@ -164,7 +165,6 @@ $(document).ready(function(){
     });
 
     $('#save-automaton-seed').click(function(e) {
-        console.log(POST_URL);
         $.ajax({
             type : 'POST',
             url : POST_URL,
