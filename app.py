@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, abort, request
+from flask import Flask, render_template, url_for, abort, request, jsonify
 import redis
 import random
 import string
