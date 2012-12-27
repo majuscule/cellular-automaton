@@ -18,12 +18,12 @@ def generate_token():
 
 
 @app.route('/', defaults={'token':0})
-@app.route('/<int:token>')
+@app.route('/<token>')
 def index(token):
     if token == 0:
         return render_template('index.html', seed=0)
 
-    seed_int = r.get(token)
+    seed_int = int(r.get(token))
     if not seed_int:
         return abort(404)
 
@@ -41,7 +41,7 @@ def make_permalink():
 
     r.set(token, seed_int)
 
-    return jsonify(token)
+    return jsonify(url_for('index', token=token, _external=True))
 
 if __name__ == '__main__':
     app.run()
