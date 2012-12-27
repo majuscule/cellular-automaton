@@ -28,26 +28,41 @@ $(document).ready(function(){
     function universe(blank) {
         this.population = [];
         this.generation = 0;
+        this.running = 0;
+        this.tickID = 0;
 
         this.blank = blank || 0;
         
         this.rows = 50;
         this.columns = 50;
 
-        var cellWidth = canvas.width / this.rows;
-        var cellHeight = canvas.height / this.columns;
+        this.cellWidth = canvas.width / this.rows;
+        this.cellHeight = canvas.height / this.columns;
 
         for (var i = 0; i < this.rows; i++) {
             var world = [];
             var x = 0;
-            var y = i * cellHeight;
+            var y = i * this.cellHeight;
             for (var ii = 0; ii < this.columns; ii++) {
-                world.push(new cell(x, y, cellWidth, cellHeight));
-                x += cellWidth;
+                world.push(new cell(x, y, this.cellWidth, this.cellHeight));
+                x += this.cellWidth;
                 if (this.blank) { world[ii].kill(); }
                 else { Math.random() > .5 ? world[ii].revive() : world[ii].kill(); }
             }
             this.population.push(world);
+        }
+
+        this.start = function() {
+            this.tickID = setInterval(function(){tick(automaton)}, 100);
+            this.running = 1;
+        }
+
+        this.stop = function() {
+            clearInterval(this.tickID);
+            this.running = 0;
+        }
+
+        this.toggle = function() {
         }
 
         this.redraw = function() {
@@ -67,7 +82,7 @@ $(document).ready(function(){
                     serial += this.population[i][ii].state;
                 }
             }
-            return serialize;
+            return serial;
         }
     }
 
@@ -111,45 +126,39 @@ $(document).ready(function(){
     }
 
     var automaton = new universe;
-    var tickID = 0;
-    var running = 0;
 
     $('#controls #start-automaton').click(function(e){
-        tickID = setInterval(function(){tick(automaton)}, 100);
+        automaton.start();
         $('#controls #start-automaton').hide();
         $('#controls #stop-automaton').show();
-        running = 1;
     });
 
     $('#controls #stop-automaton').click(function(e){
-        if (running) clearInterval(tickID);
+        automaton.stop();
         $('#controls #stop-automaton').hide();
         $('#controls #start-automaton').show();
-        running = 0;
     });
 
     $('#controls #reseed-automaton').click(function(e){
-        if (running) clearInterval(tickID);
+        automaton.stop();
         $('#controls #stop-automaton').hide();
         $('#controls #start-automaton').show();
         automaton = new universe();
-        running = 0;
     });
 
     $('#controls #custom-seed-automaton').click(function(e){
-        if (running) clearInterval(tickID);
+        automaton.stop();
         $('#controls #stop-automaton').hide();
         $('#controls #start-automaton').show();
         automaton = new universe(1);
-        running = 0;
     });
 
     $('#2d-automaton').click(function(e) {
-        if (!running) {
+        if (!automaton.running) {
             var x = e.pageX - $('#2d-automaton').offset().left;
             var y = e.pageY - $('#2d-automaton').offset().top;
-            var row = Math.floor(y / cellHeight);
-            var column = Math.floor(x / cellWidth);
+            var row = Math.floor(y / automaton.cellHeight);
+            var column = Math.floor(x / automaton.cellWidth);
             automaton.population[row][column].toggle();
         }
     });
