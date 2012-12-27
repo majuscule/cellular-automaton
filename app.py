@@ -31,7 +31,7 @@ def index(token):
     return render_template('index.html', seed=seed)
 
 
-@app.route('/_make_permalink')
+@app.route('/_make_permalink', methods=["POST"])
 def make_permalink():
     seed = request.form['seed']
 
