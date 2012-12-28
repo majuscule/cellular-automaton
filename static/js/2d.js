@@ -199,9 +199,10 @@ $(document).ready(function(){
                 seed : automaton.serialize()
             },
             success : function(data){
-                $('#save-automaton-seed').attr('id', 'permalink');
-                $('#permalink').attr("href", data.permalink);
-                $('#permalink').html(data.permalink);
+                var permalink = $('#seed-permalink');
+                permalink.attr("href", data.permalink);
+                permalink.html(data.permalink);
+                permalink.show();
             },
             error : function(XMLHttpRequest, textStatus, errorThrown) {
             }

@@ -12,6 +12,6 @@ canvas {
 #controls .control {
     cursor: pointer;
     }
-#highlight-seed, #stop-automaton {
+#highlight-seed, #stop-automaton, #seed-permalink {
     display: none;
     }
