@@ -206,6 +206,7 @@ $(document).ready(function(){
             error : function(XMLHttpRequest, textStatus, errorThrown) {
             }
         });
+        e.preventDefault();
     });
 
     var drawTickID = 0;
