@@ -47,19 +47,6 @@ $(document).ready(function(){
         this.cellWidth = canvas.width / this.rows;
         this.cellHeight = canvas.height / this.columns;
 
-        for (var i = 0; i < this.rows; i++) {
-            var world = [];
-            var x = 0;
-            var y = i * this.cellHeight;
-            for (var ii = 0; ii < this.columns; ii++) {
-                world.push(new cell(x, y, this.cellWidth, this.cellHeight));
-                x += this.cellWidth;
-                if (this.blank) { world[ii].kill(); }
-                else { Math.random() > .5 ? world[ii].revive() : world[ii].kill(); }
-            }
-            this.population.push(world);
-        }
-
         this.start = function() {
             _this = this;
             this.tickID = setInterval(function(){_this.tick()}, 100);
@@ -144,6 +131,21 @@ $(document).ready(function(){
             $('#generation')[0].innerHTML = this.generation;
 
         }
+
+        for (var i = 0; i < this.rows; i++) {
+            var world = [];
+            var x = 0;
+            var y = i * this.cellHeight;
+            for (var ii = 0; ii < this.columns; ii++) {
+                world.push(new cell(x, y, this.cellWidth, this.cellHeight));
+                x += this.cellWidth;
+                if (this.blank) { world[ii].kill(); }
+                else { Math.random() > .5 ? world[ii].revive() : world[ii].kill(); }
+            }
+            this.population.push(world);
+        }
+        
+        this.seed = this.serialize();
     }
 
     var drawTick = function(currentHoveredCell) {
@@ -196,7 +198,7 @@ $(document).ready(function(){
             url : POST_URL,
             dataType : 'json',
             data: {
-                seed : automaton.serialize()
+                seed : automaton.seed
             },
             success : function(data){
                 var permalink = $('#seed-permalink');
