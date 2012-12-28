@@ -213,6 +213,26 @@ $(document).ready(function(){
         e.preventDefault();
     });
 
+    $('#save-board-as-seed').click(function(e) {
+        $.ajax({
+            type : 'POST',
+            url : POST_URL,
+            dataType : 'json',
+            data: {
+                seed : automaton.serialize()
+            },
+            success : function(data){
+                var permalink = $('#board-as-seed-permalink');
+                permalink.attr("href", data.permalink);
+                permalink.html(data.permalink);
+                permalink.show();
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+        e.preventDefault();
+    });
+
     var drawTickID = 0;
 
     $('#2d-automaton').mousedown(function(e) {
