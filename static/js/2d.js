@@ -48,6 +48,7 @@ $(document).ready(function(){
         this.cellHeight = canvas.height / this.columns;
 
         this.start = function() {
+            if (this.generation === 0) this.seed = this.serialize();
             _this = this;
             this.tickID = setInterval(function(){_this.tick()}, 100);
             this.running = 1;
